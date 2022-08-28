@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useQuery, gql, useMutation } from '@apollo/client';
-import { DELETE_QUESTION, GET_CHARACTERS } from '../graphql/queries';
-import { faqlist } from '../interface/interface';
+import {
+  DELETE_QUESTION,
+  GET_CHARACTERS,
+  UPDATE_STATUS,
+} from '../graphql/queries';
+import { faqEdit, faqlist } from '../interface/interface';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,17 +16,31 @@ import Paper from '@mui/material/Paper';
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
 import Link from 'next/link';
+import { Box, Button, Modal } from '@mui/material';
+import Router, { useRouter } from 'next/router';
 
-function Lists() {
-  console.log('HEREEEEEE');
+interface iProps {
+  editHandler: (
+    id: string,
+    question: string,
+    answer: string,
+    status: boolean
+  ) => void;
+  edit: undefined | faqEdit;
+}
+
+function Lists({ edit, editHandler }: iProps) {
   const { loading, error, data } = useQuery(GET_CHARACTERS);
   const [deleteFAQ] = useMutation(DELETE_QUESTION);
+  const [updateStatus] = useMutation(UPDATE_STATUS);
+
   const [faq, setFaq] = useState<Array<faqlist>>([]);
+  const [open, setOpen] = React.useState(false);
+  const router = useRouter();
+
   // if (loading) return 'Loading';
 
   // if (error) return 'error';
-
-  console.log(faq);
 
   console.log('DATAAAAAAAAAAA', data?.sys_faq);
 
@@ -34,7 +52,42 @@ function Lists() {
         // _eq1: id,
       },
     });
+    setOpen(false);
+    Router.reload();
   };
+
+  const changeStatus = (id: string, defaultStatus: boolean) => {
+    var status = defaultStatus ? false : true;
+    updateStatus({
+      variables: {
+        id: id,
+        status: status,
+      },
+    });
+  };
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 10,
+    color: 'black',
+    pt: 2,
+    px: 4,
+    pb: 3,
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <div>
@@ -65,26 +118,50 @@ function Lists() {
                     id={row.id}
                     aria-label="No label tag"
                     defaultChecked={row.status}
-                    // onChange={() => changeStatus(row.id, row.status)}
+                    onChange={() => changeStatus(row.id, row.status)}
                   />
                 </TableCell>
                 <TableCell>
-                  <Link href={`/edit/${row.id}`}>
-                    <button
-                      className="edit-btn"
-                      //   onClick={() => {
-                      //     editHandler(row.id, row.question, row.answer);
-                      //   }}
-                    >
-                      Edit
-                    </button>{' '}
-                  </Link>
-                  <button
+                  {/* <Link href={'/edit/' + row.id} key={row.id}> */}
+                  {/* <a> */}
+                  <Button
+                    className="edit-btn"
+                    onClick={() => {
+                      editHandler(row.id, row.question, row.answer, row.status);
+                    }}
+                  >
+                    Edit
+                  </Button>{' '}
+                  {/* </a> */}
+                  {/* </Link> */}
+                  <Button className="del-btn" onClick={handleOpen}>
+                    Delete
+                  </Button>
+                  {/* <button
                     onClick={() => handleDelete(row.id)}
                     className="del-btn"
                   >
                     Delete
-                  </button>
+                  </button> */}
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="parent-modal-title"
+                    aria-describedby="parent-modal-description"
+                  >
+                    <Box sx={{ ...style, width: 400 }}>
+                      <h2 id="parent-modal-title">Delete confirmation</h2>
+                      <p id="parent-modal-description">
+                        Are you sure you want to delete?
+                      </p>
+                      <button
+                        onClick={() => handleDelete(row.id)}
+                        className="del-btn"
+                      >
+                        <span onClick={handleClose}>Yes</span>
+                      </button>
+                    </Box>
+                  </Modal>
                 </TableCell>
               </TableRow>
             ))}

@@ -20,9 +20,9 @@ export const ADD_NEW_QUESTION = gql`
 `;
 
 export const UPDATE_QUESTION = gql`
-  mutation updateFAQ($id: uuid!, $answer: String!, $question: String!) {
+  mutation updateFAQ($id: uuid!, $question: String!, $answer: String!) {
     update_sys_faq(
-      _set: { answer: $answer, question: $question }
+      _set: { question: $question, answer: $answer }
       where: { id: { _eq: $id } }
     ) {
       affected_rows

@@ -1,8 +1,8 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { ADD_NEW_QUESTION } from '../../graphql/queries';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 const GET_CHARACTERS = gql`
   query FAQ {
@@ -34,8 +34,15 @@ function AddForm() {
     });
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  const Comp = () => {
+    //...
+    useEffect(() => {
+      const { pathname } = Router;
+      if (pathname === '/add') {
+        Router.replace('/');
+      }
+    });
+    //...
   };
 
   // const handleSubmit = (e) => {
@@ -96,9 +103,9 @@ function AddForm() {
             variant="outlined"
           />
         </label>
-        <button type="submit" className="add-btn">
+        <button type="submit" className="add-btn" onClick={() => router.back()}>
           {' '}
-          <span onClick={() => router.back()}>Add</span>
+          <span onClick={() => router.reload()}>Add</span>
         </button>
       </form>
     </div>
