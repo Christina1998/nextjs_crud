@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import { UPDATE_QUESTION } from '../../graphql/queries';
 import { faqEdit } from '../../interface/interface';
-import { FormGroup, Input } from '@mui/material';
+import { Button, FormGroup, Input } from '@mui/material';
 import { Label } from 'reactstrap';
 import Router from 'next/router';
 
@@ -34,6 +34,7 @@ function index({
   // //   console.log('EditQuestion', edit.question);
   // //   console.log('EditAnswer', edit.answer);
   const [editFAQ] = useMutation(UPDATE_QUESTION);
+  console.log(typeof editChangeHandler);
 
   const handleSubmit = () => {
     editFAQ({
@@ -56,11 +57,12 @@ function index({
       <h1 style={{ textAlign: 'center' }}>Edit Questions</h1>
       <form className="form">
         {/* <label>Enter Question</label> */}
-        <div className="label-question">
+        <div className="label-question" style={{ marginBottom: '10' }}>
           <TextField
             id="outlined-basic"
             label="Enter Question"
             value={edit?.question}
+            style={{ marginBottom: 30, width: 450 }}
             onChange={(e) => editChangeHandler(e, 'question')}
             variant="outlined"
           />
@@ -77,13 +79,14 @@ function index({
             id="outlined-basic"
             label="Enter Answer"
             value={edit?.answer}
+            style={{ marginBottom: 30, width: 450 }}
             onChange={(e) => editChangeHandler(e, 'answer')}
             variant="outlined"
           />
         </div>
-        <button onClick={handleSubmit} className="add-btn">
+        <Button variant="contained" onClick={handleSubmit} className="add-btn">
           Update
-        </button>
+        </Button>
       </form>
     </div>
   );

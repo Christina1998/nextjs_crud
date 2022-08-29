@@ -1,5 +1,5 @@
 .add-btn {
-  background-color: rgb(73, 248, 239);
+  background-color: rgb(63, 63, 146);
   border: none;
   text-align: center;
   text-decoration: none;
@@ -8,6 +8,7 @@
   font-size: 16px;
   margin: 10px;
   float: right;
+  color: white;
 }
 
 .edit-btn {
@@ -33,12 +34,23 @@
   font-size: 16px;
 }
 
+.cancel-btn {
+  background-color: burlywood;
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 15px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   width: 100vw;
   margin-top: 50px;
-
   align-items: center;
   justify-content: center;
 }

@@ -38,10 +38,6 @@ function AddForm() {
     });
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   setConfirm(true);
@@ -82,9 +78,10 @@ function AddForm() {
           ></input> */}
           <TextField
             id="outlined-basic"
-            label="Enter Question"
+            label="Enter Questddddion"
             onChange={(e) => setQuestion(e.target.value)}
             variant="outlined"
+            style={{ margin: '300' }}
           />
         </label>
         <label className="label-question">
@@ -102,7 +99,7 @@ function AddForm() {
         </label>
         <button type="submit" className="add-btn">
           {' '}
-          Add
+          Add dddd
         </button>
       </form>
     </div>

@@ -86,6 +86,7 @@ function AddForm() {
           <TextField
             id="outlined-basic"
             label="Enter Question"
+            style={{ marginBottom: 30, width: 450 }}
             onChange={(e) => setQuestion(e.target.value)}
             variant="outlined"
           />
@@ -99,6 +100,7 @@ function AddForm() {
           <TextField
             id="outlined-basic"
             label="Enter Answer"
+            style={{ marginBottom: 30, width: 450 }}
             onChange={(e) => setAnswer(e.target.value)}
             variant="outlined"
           />

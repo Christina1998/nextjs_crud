@@ -29,20 +29,14 @@ interface iProps {
   edit: undefined | faqEdit;
 }
 
-function Lists({ edit, editHandler }: iProps) {
+function Lists({ editHandler }: iProps) {
   const { loading, error, data } = useQuery(GET_CHARACTERS);
   const [deleteFAQ] = useMutation(DELETE_QUESTION);
   const [updateStatus] = useMutation(UPDATE_STATUS);
 
   const [faq, setFaq] = useState<Array<faqlist>>([]);
   const [open, setOpen] = React.useState(false);
-  const router = useRouter();
-
-  // if (loading) return 'Loading';
-
-  // if (error) return 'error';
-
-  console.log('DATAAAAAAAAAAA', data?.sys_faq);
+  console.log(editHandler);
 
   const handleDelete = (id: string) => {
     // alert('Deleted');
@@ -92,7 +86,9 @@ function Lists({ edit, editHandler }: iProps) {
     <div>
       <div>
         <Link href="/add">
-          <button className="add-btn">Add button</button>
+          <Button variant="outlined" className="add-btn">
+            Add button
+          </Button>
         </Link>
       </div>
       <TableContainer component={Paper}>
@@ -108,7 +104,7 @@ function Lists({ edit, editHandler }: iProps) {
           <TableBody>
             {data?.sys_faq.map((row: any) => (
               <TableRow
-                key={row.answer}
+                key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell>{row.question}</TableCell>
@@ -126,6 +122,7 @@ function Lists({ edit, editHandler }: iProps) {
                   {/* <a> */}
                   <Button
                     className="edit-btn"
+                    variant="contained"
                     onClick={() => {
                       editHandler(row.id, row.question, row.answer, row.status);
                     }}
@@ -134,7 +131,11 @@ function Lists({ edit, editHandler }: iProps) {
                   </Button>{' '}
                   {/* </a> */}
                   {/* </Link> */}
-                  <Button className="del-btn" onClick={handleOpen}>
+                  <Button
+                    variant="contained"
+                    className="del-btn"
+                    onClick={handleOpen}
+                  >
                     Delete
                   </Button>
                   {/* <button
@@ -159,6 +160,9 @@ function Lists({ edit, editHandler }: iProps) {
                         className="del-btn"
                       >
                         <span onClick={handleClose}>Yes</span>
+                      </button>
+                      <button className="cancel-btn">
+                        <span onClick={handleClose}>No</span>
                       </button>
                     </Box>
                   </Modal>
