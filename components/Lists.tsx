@@ -36,7 +36,6 @@ function Lists({ editHandler }: iProps) {
 
   const [faq, setFaq] = useState<Array<faqlist>>([]);
   const [open, setOpen] = React.useState(false);
-  console.log(editHandler);
 
   const handleDelete = (id: string) => {
     // alert('Deleted');
