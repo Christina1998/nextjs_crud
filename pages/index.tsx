@@ -9,7 +9,6 @@ import Edit from '../pages/edit/[editID]';
 
 const Home: NextPage = () => {
   const [edit, setEdit] = useState<faqEdit>();
-  console.log('EDITTTTTTTTTTTTTTTTTTTTTTTTTTT', edit);
 
   const editHandler = (
     id: string,

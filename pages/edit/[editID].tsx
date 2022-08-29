@@ -29,7 +29,7 @@ function index({
   editQuestionHandler,
   editAnswerHandler,
 }: iProps) {
-  console.log('Edittttt', edit);
+  // console.log('Edittttt', edit);
   // //   console.log('EditID', edit.id);
   // //   console.log('EditQuestion', edit.question);
   // //   console.log('EditAnswer', edit.answer);
